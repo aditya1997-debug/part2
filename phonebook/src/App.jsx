@@ -2,20 +2,26 @@ import React from 'react'
 import Persons from './components/persons'
 import PersonForm from './components/personForm'
 import Filter from './components/filter'
-import { useState } from 'react'
-
+import { useState, useEffect } from 'react'
+import axios from 'axios';
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345'},
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ])
+  const [persons, setPersons] = useState([])
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNumber] = useState('')
   const [searchTerm, setSearchTerm] = useState('');
+
+  const getPersons = () => {
+    console.log("Fetching Persons...");
+    axios.get("http://localhost:3001/persons")
+        .then(response => {
+      console.log(response.data);
+      setPersons(response.data)
+    });
+  }
+
+  useEffect(getPersons, []);
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -70,7 +76,7 @@ const App = () => {
 
       <h2>Numbers</h2>
       {filteredPersons.map(person => {
-        return <Persons key={person.name} name={person.name} number={person.number}/>
+        return <Persons key={person.id} name={person.name} number={person.number}/>
       })}
     </div>
   )
