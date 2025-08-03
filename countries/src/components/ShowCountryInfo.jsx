@@ -18,7 +18,7 @@ const ShowCountryInfo = ({name=null, capital=null, area=null, languages={}, flag
         ))}
       </ul>
       <img src={flag} width="300" height="300"/>
-      <h1 style={{ margin: "10px" }}>Weather in {capital}</h1>
+      <h1 style={{ marginTop: "3px" }}>Weather in {capital}</h1>
       <p>Temperature {temperature} Celcius </p>
       <img src={getWeatherIcon} />
       <p>Wind {windSpeed} m/s</p>
